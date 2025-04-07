@@ -16,17 +16,11 @@ export const registerDriver = async (req: Request, res: Response) => {
     const driver = new Driver({
         username:req.body.username,
         password:password,
-        busNumber:"1234"
+        busNumber:req.body.busNumber
     });
     await driver.save();
-    console.log("Saved successfully")
-    const token = jwt.sign(
-        { driverId: driver._id },
-        process.env.TOKEN_KEY!,
-        { expiresIn: '8h' }
-      );
-    console.log("token")
-      res.status(201).json({ token, busNumber: driver.busNumber });
+    console.log("Saved successfully");
+      res.status(201).json({  busNumber: driver.busNumber });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
